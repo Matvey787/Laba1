@@ -5,7 +5,7 @@ float result(int K,float resistance[]);
 int preparation(float resistance[]);
 int data_select(int M, float resistance[]);
 int check(int K, float resistance[], float resistance_final);
-
+//yyy
 int main(){
 float resistance[100] = {};
 int M = preparation(resistance);
