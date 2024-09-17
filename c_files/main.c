@@ -71,6 +71,7 @@ int data_select(int M, float resistance[]){
         if (abs(resistance[i] - resistance_average)/resistance_average <= eps)
             resistance[K++] = resistance[i];
     }
+    
     return K;
 }
 
