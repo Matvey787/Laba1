@@ -34,7 +34,7 @@ int preparation(float resistance[])
 }
 
 
-int data_select(int M, float resistance[]{
+int data_select(int M, float resistance[]){
     float summary = 0;
     int eps = 3;
     for (int i = 0; i < M; i++){
