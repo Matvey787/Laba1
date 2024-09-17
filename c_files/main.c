@@ -72,6 +72,7 @@ int data_select(int M, float resistance[]){
             resistance[K++] = resistance[i];
     }
     return K;
+
 }
 
 int check(int K, float resistance[], float resistance_final){
