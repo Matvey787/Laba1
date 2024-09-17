@@ -4,7 +4,7 @@
 int main(){
     return 0;
 }
-
+// resultat ye
 float result(int K,float resistance[])
 {
     float resistance_final =0;
@@ -43,7 +43,7 @@ int data_select(int M, float resistance[]{
     float resistance_average = summary / M;
 
     int K = 0;
-    
+
     for (int j = 0; j < M; j++){
         if (abs(resistance[i] - resistance_average)/resistance_average <= eps)
             resistance[K++] = resistance[i];
