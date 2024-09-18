@@ -5,16 +5,18 @@ float result(int K,float resistance[]);
 int preparation(float resistance[]);
 int data_select(int M, float resistance[]);
 int check(int K, float resistance[], float resistance_final);
+float ABS(float x);
 
 int main(){
     float resistance[100] = {};
     int M = preparation(resistance);
     int K = data_select(M, resistance);
     float resistance_final = result(K, resistance);
+
     printf("Resistance final: %lg\n", resistance_final);
     check(K, resistance, resistance_final);
 
-return 0;
+    return 0;
 }
 
 int preparation(float resistance[])
@@ -27,9 +29,9 @@ int preparation(float resistance[])
 
     while ((scanf("%f%f",&voltagei,&currenti)) == 2)
     {
-        voltage[m]=voltagei;
-        current[m]=(currenti / 1000);
-        resistance[m]=(voltage[m]/current[m]);
+        voltage[m] = voltagei;
+        current[m] = (currenti / 1000);
+        resistance[m] = (voltage[m]/current[m]);
         m++;
     }
 
@@ -40,51 +42,54 @@ int preparation(float resistance[])
 float result(int K,float resistance[])
 {
     float resistance_final =0;
-    for (int i = 0;i < K;i++)
+    for (int i = 0; i < K;i++)
         resistance_final+=resistance[i];
 
     resistance_final /= K;
     float devivation = 0;
 
     for (int i = 0;i<K;i++){
-        //printf("d %g\n", resistance[i]-resistance_final);
         devivation += pow((resistance[i]-resistance_final), 2);
     }
-    devivation = sqrt(devivation)/K;
+    devivation = sqrt(devivation) / K;
     printf("%f +- %f\n",resistance_final,devivation);
 
     return resistance_final;
 }
 
 int data_select(int M, float resistance[]){
+
     float summary = 0;
     float eps = 0.03;
-    for (int i = 0; i < M; i++){
-        //printf("res: %g\n", resistance[i]);
-        summary += resistance[i];
-    }
-    float resistance_average = summary / M;
 
+    for (int i = 0; i < M; i++)
+        summary += resistance[i];
+
+    float resistance_average = summary / M;
     int K = 0;
 
-    for (int i = 0; i < M; i++){
-        if (abs(resistance[i] - resistance_average)/resistance_average <= eps)
+    for (int i = 0; i < M; i++)
+        if ((ABS(resistance[i] - resistance_average)) <= eps*(resistance_average))
             resistance[K++] = resistance[i];
-    }
+    
     return K;
 
 }
 
 int check(int K, float resistance[], float resistance_final){
-        float delta_zero = 0.001;
+        float delta_zero = 0.01;
         float summary = 0;
 
-        for (int i = 0; i < K; i++){
-            //printf("s %f", resistance[i] - resistance_final);
+        for (int i = 0; i < K; i++)
             summary += resistance[i] - resistance_final;
-        }
-        
-        printf("%lf\n", abs(summary));
-        summary = summary / K;
-        return (summary) < delta_zero;
+
+        printf("%lf\n", summary/K);
+        return (summary / K) < delta_zero;
+}
+
+float ABS(float x)
+{
+    if (x> 0)
+        return x;  
+    return -x;
 }
