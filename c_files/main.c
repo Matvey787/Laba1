@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <math.h>
 
-float result(int K,float resistance[]);
-int preparation(float resistance[]);
-int data_select(int M, float resistance[]);
-int check(int K, float resistance[], float resistance_final);
-float ABS(float x);
+#include "../h_files/check.h"
+#include "../h_files/preparation.h"
+#include "../h_files/data_select.h"
+#include "../h_files/result.h"
 
 int main(){
     float resistance[100] = {};
@@ -17,79 +16,4 @@ int main(){
     check(K, resistance, resistance_final);
 
     return 0;
-}
-
-int preparation(float resistance[])
-{
-    float voltage[100]={};
-    float current[100]={}; 
-    float voltagei = 0;
-    float currenti = 0;
-    unsigned short m = 0;
-
-    while ((scanf("%f%f",&voltagei,&currenti)) == 2)
-    {
-        voltage[m] = voltagei;
-        current[m] = (currenti / 1000);
-        resistance[m] = (voltage[m]/current[m]);
-        m++;
-    }
-
-    return m;
-}
-
-
-float result(int K,float resistance[])
-{
-    float resistance_final =0;
-    for (int i = 0; i < K;i++)
-        resistance_final+=resistance[i];
-
-    resistance_final /= K;
-    float devivation = 0;
-
-    for (int i = 0;i<K;i++){
-        devivation += pow((resistance[i]-resistance_final), 2);
-    }
-    devivation = sqrt(devivation) / K;
-    printf("%f +- %f\n",resistance_final,devivation);
-
-    return resistance_final;
-}
-
-int data_select(int M, float resistance[]){
-
-    float summary = 0;
-    float eps = 0.03;
-
-    for (int i = 0; i < M; i++)
-        summary += resistance[i];
-
-    float resistance_average = summary / M;
-    int K = 0;
-
-    for (int i = 0; i < M; i++)
-        if ((ABS(resistance[i] - resistance_average)) <= eps*(resistance_average))
-            resistance[K++] = resistance[i];
-    
-    return K;
-
-}
-
-int check(int K, float resistance[], float resistance_final){
-        float delta_zero = 0.01;
-        float summary = 0;
-
-        for (int i = 0; i < K; i++)
-            summary += resistance[i] - resistance_final;
-
-        printf("%lf\n", ABS(summary/K));
-        return (summary / K) < delta_zero;
-}
-
-float ABS(float x)
-{
-    if (x > 0)
-        return x;  
-    return -x;
 }
