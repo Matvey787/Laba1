@@ -8,7 +8,7 @@ int preparation(float resistance[])
     float currenti = 0;
     unsigned short m = 0;
 
-    while ((scanf("%f%f",&voltagei,&currenti)) == 2)
+    while ((scanf("%f\\%f",&voltagei,&currenti)) == 2)
     {
         voltage[m] = voltagei;
         current[m] = (currenti / 1000);
