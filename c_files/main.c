@@ -83,13 +83,13 @@ int check(int K, float resistance[], float resistance_final){
         for (int i = 0; i < K; i++)
             summary += resistance[i] - resistance_final;
 
-        printf("%lf\n", summary/K);
+        printf("%lf\n", ABS(summary/K));
         return (summary / K) < delta_zero;
 }
 
 float ABS(float x)
 {
-    if (x> 0)
+    if (x > 0)
         return x;  
     return -x;
 }
